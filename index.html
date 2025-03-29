@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charm Designs</title>
+    <!-- Alpinejs plugins -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Alpinejs core -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        [x-cloak] {
+            display: none !important
+        }
+    </style>
+
+    <link rel="stylesheet" href="/dist/output.css">
+</head>
+
+<body class="w-full">
+    <!-- This is the header -->
+    <header x-data="{open: false}" x-cloak
+        class="bg-primary fixed left-0 right-0 top-0 px-[2.4rem] xl:px-[3.43rem] w-screen flex flex-col items-center justify-between rounded-b-xl lg:rounded-b-none lg:rounded-t-xl gap-10 z-20 border-2 border-red-500">
+        <div
+            class="logoAndHamburger bg-primary w-full h-[3.18rem] xl:h-[4.125rem] flex  justify-between items-center z-10 border border-purple-500">
+            <div class="logo w-[3.31rem] xl:w-[7.125rem]  border-2 border-black">
+                <img src="./src/images/Logo.png" alt="" class="w-full h-full">
+            </div>
+
+            <!-- Hamburger menu -->
+            <div @click="open = !open;" class="hamburgerWrapper block lg:hidden">
+                <button class="hamburgerMenu flex flex-col justify-between w-8 h-6">
+                    <span :class="open ? 'translate-y-2.5 rotate-45' : '' "
+                        class="row1 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
+                    <span :class="open ? 'scale-x-0' : '' "
+                        class="row2 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
+                    <span :class="open ? '-translate-y-2.5 -rotate-45' : '' "
+                        class="row3 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
+                </button>
+            </div>
+
+            <!-- This is the other menu for large and extra large desktop -->
+            <div x-data="{activeIndex: null}" class="navWrapper hidden lg:block">
+                <nav class="flex justify-between min-w-[39rem] xl:min-w-[45rem]">
+                    <!-- Navigation -->
+                    <ul class="flex justify-evenly items-center min-w-[30rem] xl:min-w-[35rem]">
+                        <template x-for="(item, index) in [
+                                {name: 'Home', link: './index.html'},
+                                {name: 'What We Do', link: './aboutus.html'},
+                                {name: 'What We Offer', link: './programs.html'},
+                                {name: 'Testimonials', link: '.#testimonials'},
+                                {name: 'Gallery', link: './gallery.html'}
+                                
+                            ]" :key="index">
+                            <li @click="activeIndex = index"
+                                :class="activeIndex === index ? 'after:scale-x-100' : 'after:scale-x-0' "
+                                class="relative flex justify-center text-sm xl:text-base font-medium text-secondary hover:text-[1.02rem] hover:text-accent after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5 after:bg-accent after:rounded-full after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">
+                                <a :href="item.link" x-text="item.name"></a>
+                            </li>
+                        </template>
+                    </ul>
+
+                    <a href="#contactForm"
+                        class="px-5 xl:px-6 py-2 xl:py-2 rounded-[20rem] text-sm text-white font-semibold bg-accent hover:bg-fieryred transition duration-300 ease-in-out border-none">
+                        Book a call
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- This is the container responsible for creating centralizing this menu and creating some space on top -->
+        <div class="mobileMenuContainer w-full pb-10 transition-all duration-300 ease-in-out border-2 border-green-500 "
+            x-show="open" x-transition:enter="transition-all duration-500 ease-out"
+            x-transition:enter-start="-translate-y-full opacity-0" x-transition:enter-end="translate-y-0 opacity-100"
+            x-transition:leave="transition-all duration-300 ease-in"
+            x-transition:leave-start="translate-y-0 opacity-100" x-transition:leave-end="-translate-y-full opacity-0">
+            <!-- The menu for the mobile phones -->
+            <div class="mobileMenu flex flex-col gap-10 border-2 border-black">
+                <ul class="flex flex-col gap-4">
+                    <li class="text-center"> <a href="" class="text-secondary font-medium">Home</a> </li>
+                    <li class="text-center"> <a href="" class="text-secondary font-medium">What We Offer</a> </li>
+                    <li class="text-center"> <a href="" class="text-secondary font-medium">What We Do</a> </li>
+                    <li class="text-center"> <a href="" class="text-secondary font-medium">Testimonials</a></li>
+                    <li class="text-center"> <a href="" class="text-secondary font-medium">Gallery</a> </li>
+                </ul>
+
+                <div class="buttonHolder flex justify-center border-2 border-black">
+                    <a href="#contactForm"
+                        class=" px-5 xl:px-6 py-2 xl:py-2  rounded-lg text-base text-white font-semibold bg-accent transition duration-300 ease-in-out border-none">
+                        Book a
+                        call
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Hero page -->
+    <div class="containerForHeroPage w-screen border-2 border-green-500">
+        <!-- This is the background Image -->
+        <div style="background-image: url('./src/images/homepage/hero.png')"
+            class="backgroundImage bg-cover bg-center  h-screen w-screen">
+            <!-- This is the black overlay of the image -->
+            <div style="background-color: rgba(0, 0, 0, 0.4);"
+                class="blackOverlay absolute left-0 right-0 bottom-0 top-0 w-screen h-screen px-[2.4rem] ">
+            </div>
+            <!-- This is the text container that contains the text and the button -->
+            <div class="headingAndSubHeading">
+                <h1>Looking for an Interior Design Firm That Listens and Delivers?</h1>
+            </div>
+
+        </div>
+
+    </div>
+    </div>
+    <!-- This is the container that covers all the content/ -->
+    <div class="containerForAllContents w-screen  px-[2.4rem] border-2 border-green-500">
+
+
+    </div>
+</body>
+
+</html>

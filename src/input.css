@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../src/static/fonts/Roboto-Regular.ttf') format('ttf');
+    font-weight: 400;
+    font-display: swap;
+}
+
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../src/static/fonts/Roboto-Medium.ttf') format('ttf');
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../src/static/fonts/Roboto-Bold.ttf') format('ttf');
+    font-weight: 700;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../src/static/fonts/Roboto-Black.ttf') format('ttf');
+    font-weight: 900;
+    font-display: swap;
+}
+
+@layer base {
+    :root {
+        --font-primary: 'Roboto', sans-serif;
+    }
+}
+
+@theme {
+    --color-primary: #E6E6FA;
+    --color-secondary: #7B68EE;
+    --color-accent: #9370DB;
+
+    --font-primary: 'Roboto', sans-serif;
+
+    --background-image-hero: url('./images/homepage/hero.png');
+}
