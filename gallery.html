@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Metadata for the webpage -->
+    <meta charset="UTF-8"> <!-- Defines the character encoding for the document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Ensures responsiveness by scaling content based on device width -->
+    <title>Charm Designs</title> <!-- Title of the webpage displayed in the browser tab -->
+
+    <!-- Glide js -->
+    <link rel="stylesheet" href="../node_modules/@glidejs/glide/dist/css/glide.core.min.css">
+    <!-- <link rel="stylesheet" href="../node_modules/@glidejs/glide/dist/css/glide.theme.min.css"> -->
+
+    <!-- Alpinejs plugins for collapse functionality -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Alpinejs core library for reactive components -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Inline style to hide elements marked with the [x-cloak] attribute -->
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+
+
+        /* .loginSection .messageFieldContainer {
+            padding-bottom: 3.3rem;
+            gap: 0.6rem;
+        } */
+
+        /* .loginSection .messageFieldContainer .inputContainer {
+            height: 10rem;
+        } */
+
+        /* .loginSection .fieldContainer {
+            gap: 0.6rem;
+            padding-bottom: 1.5rem;
+        } */
+    </style>
+
+    <!-- Link to the external CSS file for styles -->
+    <link rel="stylesheet" href="../dist/output.css">
+
+    <!-- Link to custom CSS -->
+    <link rel="stylesheet" href="custom.css">
+</head>
+
+<body class="flex flex-col m-0 p-0 top-0 bottom-0 right-0 left-0 overflow-x-hidden">
+
+    <!-- Header section with navigation and hamburger menu for mobile view -->
+    <header x-data="{open: false}" x-cloak
+        class="theHeader bg-primary fixed top-0 left-0 right-0 px-[2.93rem] lg:px-[1.8rem] xl:px-[2.45rem] lg:max-w-[calc(100%-6rem)] xl:max-w-[calc(100%-8.5rem)] mx-auto flex flex-col items-center justify-between rounded-b-xl lg:rounded-b-none lg:rounded-t-xl gap-10 z-40 border-2 border-green-500">
+
+        <!-- Add overlay div -->
+        <div x-show="open" x-init="() => {
+        document.body.classList.add('no-scroll');
+     }" x-transition:enter="fade-in-0" x-transition:leave="fade-out-0" class="fixed inset-0 bg-black/50 z-20"
+            @click="open = false">
+
+        </div>
+
+        <!-- Container for the logo and hamburger menu on mobile -->
+        <div
+            class="logoAndHamburger bg-primary w-full h-[3.18rem] xl:h-[4.125rem] flex  justify-between items-center z-30">
+
+            <!-- Logo section with a fixed width for images -->
+            <div class="logo h-[80%] xl:h-auto w-auto xl:w-[7.125rem]">
+                <img src="./src/images/Logo.png" alt="" class="w-full h-full">
+            </div>
+
+            <!-- Hamburger menu for mobile devices, toggles the mobile menu on click -->
+            <div @click="open = !open;" class="hamburgerWrapper block lg:hidden">
+                <button class="hamburgerMenu flex flex-col justify-between w-8 h-6">
+                    <!-- Hamburger icon, uses Alpine.js to change appearance on click -->
+                    <span :class="open ? 'translate-y-2.5 rotate-45' : '' "
+                        class="row1 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
+                    <span :class="open ? 'scale-x-0' : '' "
+                        class="row2 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
+                    <span :class="open ? '-translate-y-2.5 -rotate-45' : '' "
+                        class="row3 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
+                </button>
+            </div>
+
+            <!-- Desktop navigation menu -->
+            <div x-data="{activeIndex: null}" class="navWrapper hidden lg:block">
+                <nav class="flex gap-8 min-w-[39rem] xl:min-w-[45rem]">
+                    <!-- Navigation links -->
+                    <ul class="flex justify-evenly items-center min-w-[30rem] xl:min-w-[35rem]">
+                        <!-- Dynamically generated navigation items using Alpine.js -->
+                        <template x-for="(item, index) in [
+                            {name: 'Home', link: './index.html'},
+                            {name: 'What We Do', link: './aboutus.html'},
+                            {name: 'What We Offer', link: './programs.html'},
+                            {name: 'Testimonials', link: '.#testimonials'},
+                            {name: 'Gallery', link: './gallery.html'}
+                        ]" :key="index">
+                            <li @click="activeIndex = index"
+                                :class="activeIndex === index ? 'after:scale-x-100' : 'after:scale-x-0' "
+                                class="relative flex justify-center text-sm xl:text-base font-medium text-secondary hover:text-[1.02rem] hover:text-accent after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5 after:bg-accent after:rounded-full after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">
+                                <a :href="item.link" x-text="item.name"></a>
+                            </li>
+                        </template>
+                    </ul>
+
+                    <!-- Button to book a call, visible on large screens -->
+                    <a href="#contactForm"
+                        class="px-5 xl:px-6 py-2 xl:py-2 rounded-[20rem] text-sm text-white font-semibold  bg-accent hover:bg-secondary transition-all ease-in-out duration-300 border-none">
+                        Book a call
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Mobile menu container, appears when hamburger menu is clicked -->
+        <div class="mobileMenuContainer w-full pb-10 transition-all duration-300 ease-in-out " x-show="open"
+            x-transition:enter="transition-all duration-500 ease-out"
+            x-transition:enter-start="-translate-y-full opacity-0" x-transition:enter-end="translate-y-0 opacity-100"
+            x-transition:leave="transition-all duration-300 ease-in"
+            x-transition:leave-start="translate-y-0 opacity-100" x-transition:leave-end="-translate-y-full opacity-0">
+
+            <!-- Mobile menu links and call-to-action button -->
+            <div class="mobileMenu flex flex-col gap-10">
+                <ul class="flex flex-col gap-4">
+                    <!-- Mobile navigation items -->
+                    <li class="text-center"> <a href="" class="text-secondary font-medium">Home</a> </li>
+                    <li class="text-center"> <a href="" class="text-secondary font-medium">What We Offer</a>
+                    </li>
+                    <li class="text-center"> <a href="" class="text-secondary font-medium">What We Do</a> </li>
+                    <li class="text-center"> <a href="" class="text-secondary font-medium">Testimonials</a></li>
+                    <li class="text-center"> <a href="" class="text-secondary font-medium">Gallery</a> </li>
+                </ul>
+
+                <!-- Book a call button for mobile view -->
+                <div class="buttonHolder flex justify-center">
+                    <a href="#contactForm"
+                        class=" px-5 xl:px-6 py-2 xl:py-2  rounded-lg text-base text-white font-semibold bg-accent transition duration-300 ease-in-out border-none">
+                        Book a call
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="topSection bg-[#4F4FFE] h-[3.18rem] xl:h-[4.125rem] w-full">
+            <div class="headingContainer pt-96 w-full h-full">
+                <p>Gallery</p>
+            </div>
+        </div>
+
+        <!-- This is the container that is used as the parent of coloredContainer and is used to make the extra spaces to the side on large ane extra large screens. -->
+        <div class="containerForEntirePage lg:px-[3rem] xl:px-[4.25rem] border-2 border-blue-500">
+            <!-- Body of the page, full width for the content -->
+            <!-- THis is colored part of the webpage that is in the middle of the page. -->
+            <div
+                class="coloredContainer px-[2.93rem] md:px-[2rem] lg:px-[1.7rem] xl:px-[2.4rem] pb-10 sm:pb-20 lg:pb-12  rounded-t-xl bg-primary border-2 border-green-500">
+
+
+
+            </div>
+
+            <footer class="bg-[#4F4FFE]">
+                <!-- White Part -->
+
+                <div
+                    class="whitePartContainer absolute w-screen left-0 right-0 h-10 sm:h-20 lg:h-12 lg:px-[3rem] xl:px-[4.25rem] flex items-center justify-center bg-transparent">
+                    <div
+                        class="whitePart bg-white w-full h-full rounded-b-2xl sm:rounded-b-[3rem] lg:rounded-b-[1.8rem] xl:rounded-b-[1.75rem]">
+
+                    </div>
+                </div>
+
+                <div class="actualFooterSection pt-10 sm:pt-20 lg:pt-12">
+
+                    <div class="footer flex justify-evenly items-center h-80 bg-footerColor">
+                        <div class="column1 flex flex-col justify-center items-center w-2/5 h-full">
+                            <div
+                                class="logo-and-contactInfo flex flex-col justify-center items-center w-full lg:w-1/2 h-[20rem]">
+                                <img class="w-28 md:w-30 h-20 md:h-20" src="./src/images/Logo.png" alt="">
+                                <div class="contactinfo py-4">
+                                    <p class="text-xs sm:text-base xl:text-[1.125rem] font-semibold pb-1 text-white">
+                                        0723121123</p>
+                                    <p class="text-xs sm:text-base xl:text-[1.125rem]  font-semibold text-white">
+                                        user@user.gmail.com</p>
+                                </div>
+                                <div class="socialmedia w-10/12 md:w-6/12 flex items-center justify-evenly">
+                                    <a class="w-auto h-auto" href="">
+                                        <img class="w-5 md:w-7 h-5 md:h-7" src="{% static 'src/images/facebook.svg' %}"
+                                            alt="facebook">
+                                    </a>
+                                    <a class="w-auto h-auto" href="">
+                                        <img class="w-4 md:w-6 h-4 md:h-6" src="{% static 'src/images/twitter.svg' %}"
+                                            alt="twitter">
+                                    </a>
+                                    <a class="w-auto h-auto" href="">
+                                        <img class="w-4 md:w-6 h-4 md:h-6" src="{% static 'src/images/instagram.svg' %}"
+                                            alt="X">
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- <div class="attributes pt-6 pb-2">
+                            <p class="text-xxs md:text-xs text-white">Attribute to Freepik</p>
+                            <p class="text-xxs md:text-xs text-white">Attribute to Freepik</p>
+                            <p class="text-xxs md:text-xs text-white">Attribute to Freepik</p>
+                        </div> -->
+                        </div>
+                        <div class="column2 w-2/5 h-full flex justify-center items-center">
+                            <ul class=" footer-links h-auto">
+                                <!--The underline effect on hover is in custom.css-->
+                                <li class="pb-1 md:pb-2">
+                                    <a class="text-white text-sm-body sm:text-md-body xl:text-xl-body font-semibold relative after:content-[''] after:absolute after:bg-white after:left-0 after:bottom-0 after:w-0 hover:after:w-full after:h-0.5 after:rounded-full after:transition-all after:duration-500 after:ease-in-out"
+                                        href="">Home</a>
+                                </li>
+                                <li class="pb-1 md:pb-2">
+                                    <a class="text-white text-sm-body sm:text-md-body xl:text-xl-body font-semibold relative after:content-[''] after:absolute after:bg-white after:left-0 after:bottom-0 after:w-0 hover:after:w-full after:h-0.5 after:rounded-full after:transition-all after:duration-500 after:ease-in-out "
+                                        href="">What We Offer</a>
+                                </li>
+                                <li class="pb-1 md:pb-2">
+                                    <a class="text-white text-sm-body sm:text-md-body xl:text-xl-body font-semibold relative after:content-[''] after:absolute after:bg-white after:left-0 after:bottom-0 after:w-0 hover:after:w-full after:h-0.5 after:rounded-full after:transition-all after:duration-500 after:ease-in-out "
+                                        href="">What We Do</a>
+                                </li>
+                                <li class="pb-1 md:pb-2">
+                                    <a class=" text-white text-sm-body sm:text-md-body xl:text-xl-body font-semibold relative after:content-[''] after:absolute after:bg-white after:left-0 after:bottom-0 after:w-0 hover:after:w-full after:h-0.5 after:rounded-full after:transition-all after:duration-500 after:ease-in-out "
+                                        href="">Gallery</a>
+                                </li>
+                                <li class="pb-1 md:pb-2">
+                                    <a class="text-white text-sm-body sm:text-md-body xl:text-xl-body font-semibold relative after:content-[''] after:absolute after:bg-white after:left-0 after:bottom-0 after:w-0 hover:after:w-full after:h-0.5 after:rounded-full after:transition-all after:duration-500 after:ease-in-out "
+                                        href="">What Our Clients Say</a>
+                                </li>
+                                <li class="">
+                                    <a class="text-white text-sm-body sm:text-md-body xl:text-xl-body font-semibold relative after:content-[''] after:absolute after:bg-white after:left-0 after:bottom-0 after:w-0 hover:after:w-full after:h-0.5 after:rounded-full after:transition-all after:duration-500 after:ease-in-out "
+                                        href="">Get In Touch</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="copyright">
+                        <!-- This is filled in with Javascript -->
+                        <p id="copyrightText" class="bg-black py-2 text-center text-white text-xs"> </p>
+                    </div>
+                </div>
+
+            </footer>
+        </div>
+    </section>
+
+
+    <script>
+        //Get the Current Year
+        const currentYear = new Date().getFullYear();
+
+        //Update the copyright year in the footer
+        document.getElementById("copyrightText").innerHTML = `© ${currentYear} Charm Designs. All rights reserved.`;
+    </script>
+
+    <script src="../node_modules/@glidejs/glide/dist/glide.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initialize Glide with proper options
+            const glide = new Glide('.glide', {
+                type: 'carousel',
+                perView: 3,
+                focusAt: 'center',
+                gap: 0,
+                peek: 0,
+                bound: true,
+                autoplay: 0,
+                breakpoints: {
+                    1024: {
+                        type: 'carousel',
+                        perView: 2,
+                        focusAt: 'center',
+                        autoplay: 5000,
+                        gap: 0,
+                        peek: 0,
+                        bound: true
+                    },
+                    768: {
+                        type: 'carousel',
+                        perView: 1,
+                        focusAt: 'center',
+                        autoplay: 5000,
+                        gap: 0,
+                        peek: 0,
+                        bound: true
+                    },
+
+                    425: {
+                        type: 'carousel',
+                        perView: 1,
+                        focusAt: 'center',
+                        autoplay: 5000,
+                        gap: 0,
+                        peek: 0,
+                        bound: true
+                    }
+                },
+                run: false
+            });
+
+            // Store the instance
+            const glideInstance = glide;
+
+            // Wait for mount before adding navigation
+            glide.on('mount.after', function () {
+                // Add navigation handlers after successful mount
+                document.querySelector('.glide__arrow--left').addEventListener('click', function () {
+                    glideInstance.go('<');
+                });
+
+                document.querySelector('.glide__arrow--right').addEventListener('click', function () {
+                    glideInstance.go('>');
+                });
+            });
+
+            // Mount the carousel
+            glide.mount();
+        });
+    </script>
+
+</body>
+
+</html>
+
+<!-- Make more button hoverable and also the companies worked for -->

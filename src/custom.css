@@ -1,0 +1,64 @@
+@media (max-width: 375px) {
+
+    /* Hero Page text */
+    .row1 .column1 .containerTOCreatePaddingX {
+        margin-top: 11vh;
+    }
+
+    /*Testimonial Page */
+    .cardContainer .card {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+        font-size: 0.8rem;
+    }
+
+    .cardContainer .card .testimonialInfo .identity {
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 341px) {
+
+    /* The header */
+    .theHeader {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    /* The hero section */
+    .coloredContainer {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+}
+
+@media (max-width: 320px) {
+
+    /* Hero Page text */
+    .row1 .column1 .containerTOCreatePaddingX {
+        margin-top: 11vh;
+    }
+
+    .row1 .column1 .containerTOCreatePaddingX .submitButton {
+        margin-top: 4vh;
+    }
+}
+
+@media (max-width: 312px) {
+
+    /* The header */
+    .theHeader {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    /* The hero section */
+    .coloredContainer {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+}

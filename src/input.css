@@ -43,4 +43,53 @@
     --font-primary: 'Roboto', sans-serif;
 
     --background-image-hero: url('./images/homepage/hero.png');
+
+    /* This is teh text for small screens */
+    --text-sm-h1: 2.5rem;
+    --text-sm-h1--font-weight: 700;
+    --text-sm-h2: 2.0rem;
+    --text-sm-h2--font-weight: 700;
+    --text-sm-h3: 1.5rem;
+    --text-sm-h3--font-weight: 600;
+    --text-sm-h4: 1.0rem;
+    --text-sm-h4--font-weight: 600;
+    --text-sm-body: 1.0rem;
+    --text-sm-body--font-weight: 400;
+
+
+    /* This is teh text for medium screens */
+    --text-md-h1: 2.625rem;
+    --text-md-h1--font-weight: 700;
+    --text-md-h2: 2.125rem;
+    --text-md-h2--font-weight: 600;
+    --text-md-h3: 1.625rem;
+    --text-md-h3--font-weight: 600;
+    --text-md-h4: 1.125rem;
+    --text-md-h4--font-weight: 600;
+    --text-md-body: 1.125rem;
+    --text-md-body--font-weight: 400;
+
+    /* This is teh text for extra large screens */
+    --text-xl-h1: 2.750rem;
+    --text-xl-h1--font-weight: 700;
+    --text-xl-h2: 2.250rem;
+    --text-xl-h2--font-weight: 600;
+    --text-xl-h3: 1.750rem;
+    --text-xl-h3--font-weight: 600;
+    --text-xl-h4: 1.250rem;
+    --text-xl-h4--font-weight: 600;
+    --text-xl-body: 1.250rem;
+    --text-xl-body--font-weight: 400;
+}
+
+
+
+
+
+.blackOverlay {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.galleryBlackOverlay {
+    background-color: rgba(0, 0, 0, 0.25);
 }

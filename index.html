@@ -2,124 +2,892 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <!-- Metadata for the webpage -->
+    <meta charset="UTF-8"> <!-- Defines the character encoding for the document -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charm Designs</title>
-    <!-- Alpinejs plugins -->
+    <!-- Ensures responsiveness by scaling content based on device width -->
+    <title>Charm Designs</title> <!-- Title of the webpage displayed in the browser tab -->
+
+    <!-- Glide js -->
+    <link rel="stylesheet" href="../node_modules/@glidejs/glide/dist/css/glide.core.min.css">
+    <!-- <link rel="stylesheet" href="../node_modules/@glidejs/glide/dist/css/glide.theme.min.css"> -->
+
+    <!-- Alpinejs plugins for collapse functionality -->
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
 
-    <!-- Alpinejs core -->
+    <!-- Alpinejs core library for reactive components -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+    <!-- Inline style to hide elements marked with the [x-cloak] attribute -->
     <style>
         [x-cloak] {
-            display: none !important
+            display: none !important;
         }
+
+        /* .loginSection .messageFieldContainer {
+            padding-bottom: 3.3rem;
+            gap: 0.6rem;
+        } */
+
+        /* .loginSection .messageFieldContainer .inputContainer {
+            height: 10rem;
+        } */
+
+        /* .loginSection .fieldContainer {
+            gap: 0.6rem;
+            padding-bottom: 1.5rem;
+        } */
     </style>
 
+    <!-- Link to the external CSS file for styles -->
     <link rel="stylesheet" href="/dist/output.css">
+
+    <!-- Link to custom CSS -->
+    <link rel="stylesheet" href="/src/custom.css">
 </head>
 
-<body class="w-full">
-    <!-- This is the header -->
-    <header x-data="{open: false}" x-cloak
-        class="bg-primary fixed left-0 right-0 top-0 px-[2.4rem] xl:px-[3.43rem] w-screen flex flex-col items-center justify-between rounded-b-xl lg:rounded-b-none lg:rounded-t-xl gap-10 z-20 border-2 border-red-500">
+<body class="flex flex-col m-0 p-0 top-0 bottom-0 right-0 left-0 overflow-x-hidden">
+    <!-- This is the container that is used as the parent of coloredContainer and is used to make the extra spaces to the side on large ane extra large screens. -->
+    <div class="containerForEntirePage lg:px-[3rem] xl:px-[4.25rem]">
+        <!-- Body of the page, full width for the content -->
+        <!-- THis is colored part of the webpage that is in the middle of the page. -->
         <div
-            class="logoAndHamburger bg-primary w-full h-[3.18rem] xl:h-[4.125rem] flex  justify-between items-center z-10 border border-purple-500">
-            <div class="logo w-[3.31rem] xl:w-[7.125rem]  border-2 border-black">
-                <img src="./src/images/Logo.png" alt="" class="w-full h-full">
-            </div>
+            class="coloredContainer px-[2.93rem] md:px-[2rem] lg:px-[1.7rem] xl:px-[2.4rem] pb-10 sm:pb-20 lg:pb-12  rounded-t-xl bg-primary">
+            <!-- Header section with navigation and hamburger menu for mobile view -->
+            <header x-data="{open: false}" x-cloak
+                class="theHeader bg-primary fixed top-0 left-0 right-0 px-[2.93rem] lg:px-[1.8rem] xl:px-[2.45rem] lg:max-w-[calc(100%-6rem)] xl:max-w-[calc(100%-8.5rem)] mx-auto flex flex-col items-center justify-between rounded-b-xl lg:rounded-b-none lg:rounded-t-xl gap-10 z-40">
 
-            <!-- Hamburger menu -->
-            <div @click="open = !open;" class="hamburgerWrapper block lg:hidden">
-                <button class="hamburgerMenu flex flex-col justify-between w-8 h-6">
-                    <span :class="open ? 'translate-y-2.5 rotate-45' : '' "
-                        class="row1 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
-                    <span :class="open ? 'scale-x-0' : '' "
-                        class="row2 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
-                    <span :class="open ? '-translate-y-2.5 -rotate-45' : '' "
-                        class="row3 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
-                </button>
-            </div>
+                <!-- Add overlay div -->
+                <div x-show="open" x-init="() => {
+                    document.body.classList.add('no-scroll');
+                 }" x-transition:enter="fade-in-0" x-transition:leave="fade-out-0"
+                    class="fixed inset-0 bg-black/50 z-20" @click="open = false">
 
-            <!-- This is the other menu for large and extra large desktop -->
-            <div x-data="{activeIndex: null}" class="navWrapper hidden lg:block">
-                <nav class="flex justify-between min-w-[39rem] xl:min-w-[45rem]">
-                    <!-- Navigation -->
-                    <ul class="flex justify-evenly items-center min-w-[30rem] xl:min-w-[35rem]">
-                        <template x-for="(item, index) in [
-                                {name: 'Home', link: './index.html'},
-                                {name: 'What We Do', link: './aboutus.html'},
-                                {name: 'What We Offer', link: './programs.html'},
-                                {name: 'Testimonials', link: '.#testimonials'},
-                                {name: 'Gallery', link: './gallery.html'}
-                                
-                            ]" :key="index">
-                            <li @click="activeIndex = index"
-                                :class="activeIndex === index ? 'after:scale-x-100' : 'after:scale-x-0' "
-                                class="relative flex justify-center text-sm xl:text-base font-medium text-secondary hover:text-[1.02rem] hover:text-accent after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5 after:bg-accent after:rounded-full after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">
-                                <a :href="item.link" x-text="item.name"></a>
+                </div>
+
+                <!-- Container for the logo and hamburger menu on mobile -->
+                <div
+                    class="logoAndHamburger bg-primary w-full h-[3.18rem] xl:h-[4.125rem] flex  justify-between items-center z-30">
+
+                    <!-- Logo section with a fixed width for images -->
+                    <div class="logo h-[80%] xl:h-auto w-auto xl:w-[7.125rem]">
+                        <img src="./src/images/Logo.png" alt="" class="w-full h-full">
+                    </div>
+
+                    <!-- Hamburger menu for mobile devices, toggles the mobile menu on click -->
+                    <div @click="open = !open;" class="hamburgerWrapper block lg:hidden">
+                        <button class="hamburgerMenu flex flex-col justify-between w-8 h-6">
+                            <!-- Hamburger icon, uses Alpine.js to change appearance on click -->
+                            <span :class="open ? 'translate-y-2.5 rotate-45' : '' "
+                                class="row1 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
+                            <span :class="open ? 'scale-x-0' : '' "
+                                class="row2 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
+                            <span :class="open ? '-translate-y-2.5 -rotate-45' : '' "
+                                class="row3 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
+                        </button>
+                    </div>
+
+                    <!-- Desktop navigation menu -->
+                    <div x-data="{activeIndex: null}" class="navWrapper hidden lg:block">
+                        <nav class="flex gap-8 min-w-[39rem] xl:min-w-[45rem]">
+                            <!-- Navigation links -->
+                            <ul class="flex justify-evenly items-center min-w-[30rem] xl:min-w-[35rem]">
+                                <!-- Dynamically generated navigation items using Alpine.js -->
+                                <template x-for="(item, index) in [
+                                        {name: 'Home', link: './index.html'},
+                                        {name: 'What We Do', link: './aboutus.html'},
+                                        {name: 'What We Offer', link: './programs.html'},
+                                        {name: 'Testimonials', link: '.#testimonials'},
+                                        {name: 'Gallery', link: './gallery.html'}
+                                    ]" :key="index">
+                                    <li @click="activeIndex = index"
+                                        :class="activeIndex === index ? 'after:scale-x-100' : 'after:scale-x-0' "
+                                        class="relative flex justify-center text-sm xl:text-base font-medium text-secondary hover:text-[1.02rem] hover:text-accent after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5 after:bg-accent after:rounded-full after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">
+                                        <a :href="item.link" x-text="item.name"></a>
+                                    </li>
+                                </template>
+                            </ul>
+
+                            <!-- Button to book a call, visible on large screens -->
+                            <a href="#contactForm"
+                                class="px-5 xl:px-6 py-2 xl:py-2 rounded-[20rem] text-sm text-white font-semibold  bg-accent hover:bg-secondary transition-all ease-in-out duration-300 border-none">
+                                Book a call
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Mobile menu container, appears when hamburger menu is clicked -->
+                <div class="mobileMenuContainer w-full pb-10 transition-all duration-300 ease-in-out " x-show="open"
+                    x-transition:enter="transition-all duration-500 ease-out"
+                    x-transition:enter-start="-translate-y-full opacity-0"
+                    x-transition:enter-end="translate-y-0 opacity-100"
+                    x-transition:leave="transition-all duration-300 ease-in"
+                    x-transition:leave-start="translate-y-0 opacity-100"
+                    x-transition:leave-end="-translate-y-full opacity-0">
+
+                    <!-- Mobile menu links and call-to-action button -->
+                    <div class="mobileMenu flex flex-col gap-10">
+                        <ul class="flex flex-col gap-4">
+                            <!-- Mobile navigation items -->
+                            <li class="text-center"> <a href="" class="text-secondary font-medium">Home</a> </li>
+                            <li class="text-center"> <a href="" class="text-secondary font-medium">What We Offer</a>
                             </li>
-                        </template>
-                    </ul>
+                            <li class="text-center"> <a href="" class="text-secondary font-medium">What We Do</a> </li>
+                            <li class="text-center"> <a href="" class="text-secondary font-medium">Testimonials</a></li>
+                            <li class="text-center"> <a href="" class="text-secondary font-medium">Gallery</a> </li>
+                        </ul>
 
-                    <a href="#contactForm"
-                        class="px-5 xl:px-6 py-2 xl:py-2 rounded-[20rem] text-sm text-white font-semibold bg-accent hover:bg-fieryred transition duration-300 ease-in-out border-none">
-                        Book a call
-                    </a>
-                </nav>
-            </div>
-        </div>
+                        <!-- Book a call button for mobile view -->
+                        <div class="buttonHolder flex justify-center">
+                            <a href="#contactForm"
+                                class=" px-5 xl:px-6 py-2 xl:py-2  rounded-lg text-base text-white font-semibold bg-accent transition duration-300 ease-in-out border-none">
+                                Book a call
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
 
-        <!-- This is the container responsible for creating centralizing this menu and creating some space on top -->
-        <div class="mobileMenuContainer w-full pb-10 transition-all duration-300 ease-in-out border-2 border-green-500 "
-            x-show="open" x-transition:enter="transition-all duration-500 ease-out"
-            x-transition:enter-start="-translate-y-full opacity-0" x-transition:enter-end="translate-y-0 opacity-100"
-            x-transition:leave="transition-all duration-300 ease-in"
-            x-transition:leave-start="translate-y-0 opacity-100" x-transition:leave-end="-translate-y-full opacity-0">
-            <!-- The menu for the mobile phones -->
-            <div class="mobileMenu flex flex-col gap-10 border-2 border-black">
-                <ul class="flex flex-col gap-4">
-                    <li class="text-center"> <a href="" class="text-secondary font-medium">Home</a> </li>
-                    <li class="text-center"> <a href="" class="text-secondary font-medium">What We Offer</a> </li>
-                    <li class="text-center"> <a href="" class="text-secondary font-medium">What We Do</a> </li>
-                    <li class="text-center"> <a href="" class="text-secondary font-medium">Testimonials</a></li>
-                    <li class="text-center"> <a href="" class="text-secondary font-medium">Gallery</a> </li>
-                </ul>
 
-                <div class="buttonHolder flex justify-center border-2 border-black">
-                    <a href="#contactForm"
-                        class=" px-5 xl:px-6 py-2 xl:py-2  rounded-lg text-base text-white font-semibold bg-accent transition duration-300 ease-in-out border-none">
-                        Book a
-                        call
-                    </a>
+            <!-- Hero section with background image and call-to-action text -->
+            <section class="containerForHeroPage w-full">
+                <div style="background-image: url('./src/images/homepage/hero/hero.png')"
+                    class="backgroundImage absolute inset-0 bg-cover bg-center h-screen w-screen lg:hidden">
+
+                    <!-- Overlay to darken the background image for better text visibility -->
+                    <!-- The overlay is implement with css in input.css with the attribute blackOveralay -->
+                    <div class="blackOverlay absolute inset-0 left-0 right-0 bottom-0 top-0 w-screen h-screen">
+                    </div>
+                </div>
+                <div class="relativeWrapper h-screen lg:h-auto ">
+                    <div class="multiColumnSection flex flex-col gap-6 xl:gap-8">
+                        <div class="row1 flex justify-between lg:gap-10 xl:gap-0">
+                            <div class="column1 flex flex-col gap-10 lg:w-[59%] xl:w-[40%]">
+                                <!-- Text and button inside the hero section -->
+                                <div class="containerTOCreatePaddingX relative z-10 mt-[16vh] md:mt-[20vh]">
+                                    <div class="headingAndSubHeading">
+                                        <h1
+                                            class="text-white lg:text-secondary font-bold text-[2.5rem] md:text-[2.75rem] lg:text-[2.125rem]  tracking-tight leading-11 md:leading-tight lg:leading-10 xl:leading-tight">
+                                            Looking for an Interior Design Firm That Listens and Delivers?
+                                        </h1>
+                                        <p
+                                            class="text-white lg:text-secondary font-bold md:text-xl lg:text-[1.125rem] xl:text-xl mt-[2vh] lg:leading-6 xl:leading-7">
+                                            Frustrated by poor construction that fails to match your vision? Living with
+                                            regretful
+                                            choices can be exhausting. As a trusted Interior Design Firm in Kenya, we
+                                            ensure
+                                            your space
+                                            reflects your vision and is completed on time.
+                                        </p>
+                                    </div>
+                                    <!-- Call to action button -->
+                                    <div class="submitButton mt-[8vh] font-semibold">
+                                        <a
+                                            class="px-6 py-3 text-white bg-accent hover:bg-secondary transition-all ease-in-out duration-300 rounded-xl cursor-pointer">Get
+                                            in
+                                            Touch</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column2  lg:mt-[16vh] xl::mt-[20vh] hidden lg:block">
+                                <img class="w-[30rem] xl:w-[37rem] h-[26rem] xl:h-[30rem]"
+                                    src="./src/images/homepage/hero/hero.png" alt="">
+                            </div>
+                        </div>
+                        <div class="row2 hidden lg:block">
+                            <p class="pb-2.5 xl:pb-4 text-secondary font-bold text-[0.9rem] xl:text-base">Worked with:
+                            </p>
+                            <div class="trustedCompany grid grid-rows-2 grid-cols-4 gap-y-4">
+                                <div class="trustedCompany-item flex items-center justify-start">
+                                    <p
+                                        class="w-11/12 xl:w-10/12 lg:py-3 text-sm font-bold bg-[#9470db8f] text-white text-center rounded-lg transition-transform duration-500 ease-in-out hover:bg-[#7676df] hover:shadow-lg hover:scale-102">
+                                        Kenyan
+                                        County
+                                        Government</p>
+                                </div>
+                                <div class="trustedCompany-item flex items-center justify-start">
+                                    <p
+                                        class="w-11/12 xl:w-10/12 lg:py-3 text-sm font-bold bg-[#9470db8f] text-white text-center rounded-lg transition-transform duration-500 ease-in-out hover:bg-[#7676df] hover:shadow-lg hover:scale-102">
+                                        Nescafe
+                                    </p>
+                                </div>
+                                <div class="trustedCompany-item flex items-center justify-start">
+                                    <p
+                                        class="w-11/12 xl:w-10/12 lg:py-3 text-sm font-bold bg-[#9470db8f] text-white text-center rounded-lg transition-transform duration-500 ease-in-out hover:bg-[#7676df] hover:shadow-lg hover:scale-102">
+                                        Universal
+                                    </p>
+                                </div>
+                                <div class="trustedCompany-item flex items-center justify-start">
+                                    <p
+                                        class="w-11/12 xl:w-10/12 lg:py-3 text-sm font-bold bg-[#9470db8f] text-white text-center rounded-lg transition-transform duration-500 ease-in-out hover:bg-[#7676df] hover:shadow-lg hover:scale-102">
+                                        Phillip
+                                        Apartment</p>
+                                </div>
+                                <div class="trustedCompany-item flex items-center justify-start">
+                                    <p
+                                        class="w-11/12 xl:w-10/12 lg:py-3 text-sm font-bold bg-[#9470db8f] text-white text-center rounded-lg transition-transform duration-500 ease-in-out hover:bg-[#7676df] hover:shadow-lg hover:scale-102">
+                                        Limuru
+                                        National Hospital</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- What we Offer -->
+            <section class="containerForHeroPage w-full">
+                <div class="headingContainer mt-[5.5rem] pb-[3.125rem]  xl:pb-[4.125rem]">
+                    <p class="text-sm-h2 sm:text-md-h2 xl:text-xl-h2 text-secondary text-center">What We
+                        Offer</p>
+                </div>
+                <div
+                    class="cards flex flex-col lg:flex-row items-center lg:justify-between gap-10 lg:gap-7 xl:gap-10 sm:gap-[4.6rem]">
+                    <div
+                        class="card py-12 lg:py-10 xl:py-12 px-[1.875rem] sm:px-12 lg:px-8 xl:px-12 h-[24rem] sm:h-[25rem] sm:w-[23rem] lg:w-[32rem] xl:w-[23rem] bg-secondary rounded-[1.25rem]">
+                        <div class="logoAndName flex flex-col items-center">
+                            <img src="./src/images/homepage/whatweoffer/quality.svg" alt="Quality"
+                                class="w-[5rem] h-[5.125rem]">
+                            <p class="text-white text-xl sm:text-[1.25rem] font-semibold pt-2">Quality</p>
+                        </div>
+                        <div
+                            class="text text-white text-sm-body sm:text-xl-body lg:text-md-body xl:text-xl-body pt-[2.125rem] lg:pt-[2rem] xl:pt-[2.125rem] sm:pt-10 text-balance">
+                            Frustrated with disappointing results? Our interior design company ensures top-quality work,
+                            delivered on time.
+                        </div>
+                    </div>
+                    <div
+                        class="card py-12 lg:py-10 xl:py-12 px-[1.875rem] sm:px-12 lg:px-8 xl:px-12 h-[24rem] sm:h-[25rem] sm:w-[23rem] lg:w-[32rem] xl:w-[23rem] bg-secondary rounded-[1.25rem]">
+                        <div class="logoAndName flex flex-col items-center">
+                            <img src="./src/images/homepage/whatweoffer/customer-focused.svg" alt="customer-focused"
+                                class="w-[5rem] h-[5.125rem]">
+                            <p class="text-white text-xl sm:text-[1.25rem] font-semibold pt-2">Customer Focused</p>
+                        </div>
+                        <div
+                            class="text text-white text-sm-body sm:text-xl-body lg:text-md-body xl:text-xl-body  pt-[2.125rem] sm:pt-10">
+                            Projects not turning out as expected?
+                            We listen, refine, and deliver what you truly want.
+                        </div>
+                    </div>
+                    <div
+                        class="card py-12 lg:py-10 xl:py-12 px-[1.875rem] sm:px-12 lg:px-8 xl:px-12 h-[24rem] sm:h-[25rem] sm:w-[23rem] lg:w-[32rem] xl:w-[23rem] bg-secondary rounded-[1.25rem]">
+                        <div class="logoAndName flex flex-col items-center">
+                            <img src="./src/images/homepage/whatweoffer/adaptability.svg" alt="adaptability"
+                                class="w-[5rem] h-[5.125rem]">
+                            <p class="text-white text-xl sm:text-[1.25rem] font-semibold pt-2">Adaptability</p>
+                        </div>
+                        <div
+                            class="text text-white text-sm-body sm:text-xl-body lg:text-md-body xl:text-xl-body pt-[2.125rem] sm:pt-10">
+                            We utilize the latest technology to deliver high-quality results, ensuring your
+                            satisfaction.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- What we do -->
+            <section class="containerForHeroPage w-full">
+                <div class="headingContainer mt-[5.5rem] pb-[3.125rem]  xl:pb-[4.125rem]">
+                    <p class="text-sm-h2 sm:text-md-h2 xl:text-xl-h2 text-secondary text-center">What We
+                        Do</p>
+                </div>
+                <div class="contentContainer flex justify-center lg:justify-between" x-data="{ 
+                        openIndex: null, 
+                        currentImage: './src/images/homepage/whatwedo/tile.png',
+                        images:
+                            {
+                                1: './src/images/homepage/whatwedo/tile.png',
+                                2: './src/images/homepage/whatwedo/woodplanks.png', 
+                                3: './src/images/homepage/whatwedo/tile.png', 
+                                4: './src/images/homepage/whatwedo/tile.png', 
+                                5: './src/images/homepage/whatwedo/tile.png', 
+                                6: './src/images/homepage/whatwedo/tile.png', 
+                            }
+                    }">
+                    <!-- Accordion -->
+                    <div
+                        class="servicesAccordionContainer flex items-center justify-center grow-0 sm:w-[80%] lg:w-[45%]">
+                        <div class="dropdowns w-full">
+                            <!-- Dropdown 1 -->
+                            <!-- If openIndex is already open (openIndex === 1), it sets it to null (closes it). If closed, sets openIndex = 1 (opens it). This ensures toggle works. -->
+                            <div @click="openIndex = (openIndex === 1 ? null : 1), currentImage = images[1]"
+                                class="dropdown bg-secondary px-9 py-[1rem] border-none outline-none rounded-t-xl">
+                                <div class="dropdown-header flex justify-between items-center cursor-pointer">
+                                    <p :class="openIndex === 1 ? 'opacity-50' : 'opacity-100' "
+                                        class="text-sm-h3 sm:text-md-h3 xl:text-xl-h3 text-white">
+                                        Tiling
+                                    </p>
+                                    <div class="imageDiv">
+                                        <img class="dropdown-icon w-5 sm:w-6 xl:w-8 h-5 sm:h-6 xl:h-8 transition-transform duration-300"
+                                            src="./src/images/homepage/whatwedo/chevron-down.svg"
+                                            :class="openIndex === 1 ? 'rotate-180 opacity-50' : 'opacity-100'" />
+                                    </div>
+                                </div>
+                                <div x-show="openIndex === 1" x-collapse x-cloak
+                                    class="dropdown-content pt-5 pb-3 text-white text-sm sm:text-base xl:text-lg">
+                                    Calisthenics is a form of strength training that uses bodyweight exercises to
+                                    improve
+                                    flexibility, endurance, and coordination.
+                                </div>
+                            </div>
+
+                            <!-- Dropdown 2 -->
+                            <div @click="openIndex = (openIndex === 2 ? null : 2), currentImage = images[2]"
+                                @click="currentImage = './src/images/homepage/whatwedo/woodplanks.png'"
+                                class="dropdown bg-secondary px-9 py-[1rem] border-none outline-none">
+                                <div class="dropdown-header flex justify-between items-center grow-0 cursor-pointer">
+                                    <p :class="openIndex === 2 ? 'opacity-50' : 'opacity-100' "
+                                        class="text-sm-h3 sm:text-md-h3 xl:text-xl-h3 text-white">
+                                        Pavers
+                                    </p>
+                                    <div class="imageDiv">
+                                        <img class="dropdown-icon w-5 sm:w-6 xl:w-8 h-5 sm:h-6 xl:h-8 transition-transform duration-300"
+                                            src="./src/images/homepage/whatwedo/chevron-down.svg"
+                                            :class="openIndex === 2 ? 'rotate-180 opacity-50' : 'opacity-100'" />
+                                    </div>
+                                </div>
+                                <div x-show="openIndex === 2" x-collapse x-cloak
+                                    class="dropdown-content pt-5 pb-3 text-white text-sm sm:text-base xl:text-lg">
+                                    To start, simply sign up on our website, choose a program, and begin your journey
+                                    with our
+                                    guided training sessions.
+                                </div>
+                            </div>
+
+                            <!-- Dropdown 3 -->
+                            <!-- Ensures that only one dropdown is open at a time -->
+                            <div @click="openIndex = (openIndex === 3 ? null : 3), currentImage = images[3]"
+                                class="dropdown bg-secondary px-9 py-[1rem] border-none outline-none">
+                                <div class="dropdown-header flex justify-between items-center cursor-pointer">
+                                    <p :class="openIndex === 3 ? 'opacity-50' : 'opacity-100' "
+                                        class="text-sm-h3 sm:text-md-h3 xl:text-xl-h3 text-white">
+                                        Wood Planks
+                                    </p>
+                                    <div class="imageDiv">
+                                        <img class="dropdown-icon w-5 sm:w-6 xl:w-8 h-5 sm:h-6 xl:h-8 transition-transform duration-300"
+                                            src="./src/images/homepage/whatwedo/chevron-down.svg"
+                                            :class="openIndex === 3 ? 'rotate-180 opacity-50' : 'opacity-100'" />
+                                    </div>
+                                </div>
+                                <div x-show="openIndex === 3" x-collapse x-cloak
+                                    class="dropdown-content pt-5 pb-3 text-white text-sm sm:text-base xl:text-lg">
+                                    Most of our programs require minimal equipment, but resistance bands, pull-up bars,
+                                    and mats
+                                    can enhance your experience.
+                                </div>
+                            </div>
+
+                            <!-- Dropdown 4 -->
+                            <div @click="openIndex = (openIndex === 4 ? null : 4), currentImage = images[4]"
+                                class="dropdown bg-secondary px-9 py-[1rem] border-none outline-none">
+                                <div class="dropdown-header flex justify-between items-center cursor-pointer">
+                                    <p :class="openIndex === 4 ? 'opacity-50' : 'opacity-100' "
+                                        class="text-sm-h3 sm:text-md-h3 xl:text-xl-h3 text-white">
+                                        Marble Sheets
+                                    </p>
+                                    <div class="imageDiv">
+                                        <img class="dropdown-icon w-5 sm:w-6 xl:w-8 h-5 sm:h-6 xl:h-8 transition-transform duration-300"
+                                            src="./src/images/homepage/whatwedo/chevron-down.svg"
+                                            :class="openIndex === 4 ? 'rotate-180 opacity-50' : 'opacity-100'" />
+                                    </div>
+                                </div>
+                                <div x-show="openIndex === 4" x-collapse x-cloak
+                                    class="dropdown-content pt-5 pb-3 text-white text-sm sm:text-base xl:text-lg">
+                                    Absolutely! Our programs include beginner-friendly workouts with step-by-step
+                                    guidance.
+                                </div>
+                            </div>
+
+                            <!-- Dropdown 5 -->
+                            <!-- Uses the same toggle logic for opening and closing -->
+                            <div @click="openIndex = (openIndex === 5 ? null : 5), currentImage = images[5]"
+                                class="dropdown bg-secondary px-9 py-[1rem] border-none outline-none">
+                                <div class="dropdown-header flex justify-between items-center cursor-pointer">
+                                    <p :class="openIndex === 5 ? 'opacity-50' : 'opacity-100' "
+                                        class="text-sm-h3 sm:text-md-h3 xl:text-xl-h3 text-white">
+                                        Gypsum Boards
+                                    </p>
+                                    <div class="imageDiv">
+                                        <img class="dropdown-icon w-5 sm:w-6 xl:w-8 h-5 sm:h-6 xl:h-8 transition-transform duration-300"
+                                            src="./src/images/homepage/whatwedo/chevron-down.svg"
+                                            :class="openIndex === 5 ? 'rotate-180 opacity-50' : 'opacity-100'" />
+                                    </div>
+                                </div>
+                                <div x-show="openIndex === 5" x-collapse x-cloak
+                                    class="dropdown-content pt-5 pb-3 text-white text-sm sm:text-base xl:text-lg">
+                                    You can track your progress using our built-in fitness tracker, which logs workouts,
+                                    improvements, and milestones.
+                                </div>
+                            </div>
+
+                            <!-- Dropdown 6 -->
+                            <div @click="openIndex = (openIndex === 6 ? null : 6), currentImage = images[6]"
+                                class="dropdown bg-secondary px-9 py-[1rem] border-none outline-none rounded-b-xl">
+                                <div class="dropdown-header flex justify-between items-center cursor-pointer">
+                                    <p :class="openIndex === 6 ? 'opacity-50' : 'opacity-100' "
+                                        class="text-sm-h3 sm:text-md-h3 xl:text-xl-h3 text-white">
+                                        Kitchen Counter Tops
+                                    </p>
+                                    <div class="imageDiv">
+                                        <img class="dropdown-icon w-5 sm:w-6 xl:w-8 h-5 sm:h-6 xl:h-8 transition-transform duration-300"
+                                            src="./src/images/homepage/whatwedo/chevron-down.svg"
+                                            :class="openIndex === 6 ? 'rotate-180 opacity-50' : 'opacity-100'" />
+                                    </div>
+                                </div>
+                                <div x-show="openIndex === 6" x-collapse x-cloak
+                                    class="dropdown-content pt-5 pb-3 text-white text-sm sm:text-base xl:text-lg">
+                                    Yes! We provide meal plans designed to complement your workouts and help you achieve
+                                    your
+                                    fitness goals.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="imagesPicture hidden lg:block w-[45%] shrink-0">
+                        <div class="pictureContainer w-full h-full flex items-start justify-center lg:pt-12 xl:pt-0 ">
+                            <img :src="currentImage" alt="" class="w-full rounded-lg xl:rounded-xl">
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Gallery -->
+            <section class="containerForHeroPage w-full">
+                <div class="headingContainer mt-[5.5rem] pb-[3.125rem]  xl:pb-[4.125rem]">
+                    <p class="text-sm-h2 sm:text-md-h2 xl:text-xl-h2 text-secondary text-center">
+                        Gallery
+                    </p>
+                </div>
+
+                <div
+                    class="imageGallery grid grid-rows-3 lg:grid-rows-2 grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-6 xl:gap-y-20 xl:gap-x-20  h-[33rem] sm:h-[40rem] md:h-[50rem] lg:h-[37rem] xl:h-[40rem]">
+                    <div class=" relative  w-auto bg-no-repeat bg-cover bg-center rounded-lg"
+                        style="background-image: url('./src/images/homepage/gallery/tile.png');">
+                        <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed rounded-lg"
+                            style="background-color: rgba(0, 0, 0, 0.35 );">
+                            <p
+                                class="flex justify-center items-center h-3/5 pt-10 md:pt-20 w-full text-white text-sm-h3 sm:text-md-h3 xl:text-xl-h3 font-semibold text-center md:text-left ">
+                                <!--Padding on top has been added to make the text center aligned.-->
+                                TILING
+                            </p>
+                            <div class="buttonContainer h-2/5 w-11/12 flex items-center justify-end">
+                                <div
+                                    class="button flex justify-between items-center bg-secondary w-20 h-8 md:w-28 md:h-10 lg:w-36 lg:h-12 xl:w-36 xl:h-13 px-2 md:px-4 rounded-md cursor-pointer transition-all duration-500 ease-in-out hover:bg-accent hover:scale-102">
+                                    <p class="text-white font-medium text-[0.625rem] md:text-sm xl:text-base">More</p>
+                                    <img class="h-2.5 w-2.5 md:h-3 md:w-3 lg:h-4 lg:w-4"
+                                        src="./src/images/homepage/gallery/right-chevron.svg" alt="Icon to be here">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" relative w-auto bg-no-repeat bg-cover bg-center rounded-lg"
+                        style="background-image: url('./src/images/homepage/gallery/pavers.png');">
+                        <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed rounded-lg"
+                            style="background-color: rgba(0, 0, 0, 0.35 );">
+                            <p
+                                class="flex justify-center items-center h-3/5 pt-10 md:pt-20 w-full text-white text-sm-h3 sm:text-md-h3 xl:text-xl-h3 font-medium text-center md:text-left leading-8 sm:leading-none">
+                                <!--Padding on top has been added to make the text center aligned.-->
+                                PAVERS
+                            </p>
+                            <div class="buttonContainer h-2/5 w-11/12 flex items-center justify-end">
+                                <div
+                                    class="button flex justify-between items-center bg-secondary w-20 h-8 md:w-28 md:h-10 lg:w-36 lg:h-12 xl:w-36 xl:h-13 px-2 md:px-4 rounded-md cursor-pointer transition-all duration-500 ease-in-out hover:bg-accent hover:scale-102">
+                                    <p class="text-white font-medium text-[0.625rem] md:text-sm xl:text-base">More</p>
+                                    <img class="h-2.5 w-2.5 md:h-3 md:w-3 lg:h-4 lg:w-4"
+                                        src="./src/images/homepage/gallery/right-chevron.svg" alt="Icon to be here">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" relative  w-auto bg-no-repeat bg-cover bg-center rounded-lg"
+                        style="background-image: url('./src/images/homepage/gallery/woodplanks.png');">
+                        <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed rounded-lg"
+                            style="background-color: rgba(0, 0, 0, 0.35 );">
+                            <p
+                                class="flex justify-center items-center h-3/5 pt-10 md:pt-20 w-full text-white text-sm-h3 sm:text-md-h3 xl:text-xl-h3 font-medium text-center md:text-left leading-8 sm:leading-none">
+                                <!--Padding on top has been added to make the text center aligned.-->
+                                WOOD PLANKS
+                            </p>
+                            <div class="buttonContainer h-2/5 w-11/12 flex items-center justify-end">
+                                <div
+                                    class="button flex justify-between items-center bg-secondary w-20 h-8 md:w-28 md:h-10 lg:w-36 lg:h-12 xl:w-36 xl:h-13 px-2 md:px-4 rounded-md cursor-pointer transition-all duration-500 ease-in-out hover:bg-accent hover:scale-102">
+                                    <p class="text-white font-medium text-[0.625rem] md:text-sm xl:text-base">More</p>
+                                    <img class="h-2.5 w-2.5 md:h-3 md:w-3 lg:h-4 lg:w-4"
+                                        src="./src/images/homepage/gallery/right-chevron.svg" alt="Icon to be here">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" relative w-auto bg-no-repeat bg-cover bg-center rounded-lg"
+                        style="background-image: url('./src/images/homepage/gallery/marble-sheets.png');">
+                        <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed rounded-lg"
+                            style="background-color: rgba(0, 0, 0, 0.35 );">
+                            <p
+                                class="flex justify-center items-center h-3/5 pt-10 md:pt-20 w-full text-white text-sm-h3 sm:text-md-h3 xl:text-xl-h3 font-medium text-center md:text-left leading-8 sm:leading-none">
+                                <!--Padding on top has been added to make the text center aligned.-->
+                                MARBLE SHEETS
+                            </p>
+                            <div class="buttonContainer h-2/5 w-11/12 flex items-center justify-end">
+                                <div
+                                    class="button flex justify-between items-center bg-secondary w-20 h-8 md:w-28 md:h-10 lg:w-36 lg:h-12 xl:w-36 xl:h-13 px-2 md:px-4 rounded-md cursor-pointer transition-all duration-500 ease-in-out hover:bg-accent hover:scale-102">
+                                    <p class="text-white font-medium text-[0.625rem] md:text-sm xl:text-base">More</p>
+                                    <img class="h-2.5 w-2.5 md:h-3 md:w-3 lg:h-4 lg:w-4"
+                                        src="./src/images/homepage/gallery/right-chevron.svg" alt="Icon to be here">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" relative  w-auto bg-no-repeat bg-cover bg-center rounded-lg"
+                        style="background-image: url('./src/images/homepage/gallery/gypsum.png');">
+                        <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed rounded-lg"
+                            style="background-color: rgba(0, 0, 0, 0.35 );">
+                            <p
+                                class="flex justify-center items-center h-3/5 pt-10 md:pt-20 w-full text-white text-sm-h3 sm:text-md-h3 xl:text-xl-h3 font-medium text-center md:text-left leading-8 sm:leading-none">
+                                <!--Padding on top has been added to make the text center aligned.-->
+                                GYPSUM BOARDS
+                            </p>
+                            <div class="buttonContainer h-2/5 w-11/12 flex items-center justify-end">
+                                <div
+                                    class="button flex justify-between items-center bg-secondary w-20 h-8 md:w-28 md:h-10 lg:w-36 lg:h-12 xl:w-36 xl:h-13 px-2 md:px-4 rounded-md cursor-pointer transition-all duration-500 ease-in-out hover:bg-accent hover:scale-102">
+                                    <p class="text-white font-medium text-[0.625rem] md:text-sm xl:text-base">More</p>
+                                    <img class="h-2.5 w-2.5 md:h-3 md:w-3 lg:h-4 lg:w-4"
+                                        src="./src/images/homepage/gallery/right-chevron.svg" alt="Icon to be here">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" relative  w-auto bg-no-repeat bg-cover bg-center rounded-lg"
+                        style="background-image: url('./src/images/homepage/gallery/kitchen-counter-tops.png');">
+                        <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed rounded-lg"
+                            style="background-color: rgba(0, 0, 0, 0.35 );">
+                            <p
+                                class="flex justify-center items-center h-3/5 pt-10 md:pt-16 lg:pt-20 lg:px-2 w-full text-white text-sm-h3 sm:text-md-h3 xl:text-xl-h3 font-medium text-center md:text-lefttext-balances leading-7 sm:leading-9 ">
+                                <!--Padding on top has been added to make the text center aligned.-->
+                                KITCHEN COUNTER TOPS
+                            </p>
+                            <div class="buttonContainer h-2/5 w-11/12 flex items-center justify-end">
+                                <div
+                                    class="button flex justify-between items-center bg-secondary w-20 h-8 md:w-28 md:h-10 lg:w-36 lg:h-12 xl:w-36 xl:h-13 px-2 md:px-4 rounded-md cursor-pointer transition-all duration-500 ease-in-out hover:bg-accent hover:scale-102">
+                                    <p class="text-white font-medium text-[0.625rem] md:text-sm xl:text-base">More</p>
+                                    <img class="h-2.5 w-2.5 md:h-3 md:w-3 lg:h-4 lg:w-4"
+                                        src="./src/images/homepage/gallery/right-chevron.svg" alt="Icon to be here">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials -->
+            <section class="containerForHeroPage w-full pb-20 sm:pb-2">
+                <div class="headingContainer mt-[5.5rem] pb-[3.125rem]  xl:pb-[4.125rem]">
+                    <p class="text-sm-h2 sm:text-md-h2 xl:text-xl-h2 text-secondary text-center">
+                        What Our Clients Say
+                    </p>
+                </div>
+                <div class="testmonialContainer glide">
+                    <div class="glide__track" data-glide-el="track">
+                        <div class="glide__slides slider flex justify-center">
+                            <div class="glide__slide cardContainer flex items-center justify-center w-full">
+                                <div
+                                    class="card px-[2.3rem] py-20 w-full md:w-[90%] lg:w-[90%] max-w-[24.18rem] bg-secondary rounded-2xl">
+                                    <div class="testimonialText text-white font-medium text-balance">
+                                        "Working with this company was an excellent experience from start to finish.
+                                        They
+                                        really listened to what I wanted and made thoughtful recommendations to bring my
+                                        vision to life. The tiling and countertops turned out beautifully—every detail
+                                        is
+                                        just perfect. I couldn’t be happier with the quality and attention they put into
+                                        the
+                                        work!"
+                                    </div>
+                                    <div class="testimonialInfo pt-8 text-center">
+                                        <div class="name text-white font-medium">Alex.K</div>
+                                        <div class="identity text-[0.875rem] text-white font-medium italic">Home Owner
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="glide__slide cardContainer flex items-center justify-center">
+                                <div
+                                    class=" card px-[2.3rem] py-20 w-full md:w-[90%] lg:w-[90%] max-w-[24.18rem] bg-secondary rounded-2xl">
+                                    <div class="testimonialText text-white font-medium text-balance">
+                                        "Working with this company was an excellent experience from start to finish.
+                                        They
+                                        really listened to what I wanted and made thoughtful recommendations to bring my
+                                        vision to life. The tiling and countertops turned out beautifully—every detail
+                                        is
+                                        just perfect. I couldn’t be happier with the quality and attention they put into
+                                        the
+                                        work!"
+                                    </div>
+                                    <div class="testimonialInfo pt-8 text-center">
+                                        <div class="name text-white font-medium">Alex.K</div>
+                                        <div class="identity text-[0.875rem] text-white font-medium italic">Home Owner
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="glide__slide cardContainer flex items-center justify-center">
+                                <div
+                                    class=" card px-[2.3rem] py-20 w-full md:w-[90%] lg:w-[90%] max-w-[24.18rem] bg-secondary rounded-2xl">
+                                    <div class="testimonialText text-white font-medium text-balance">
+                                        "Working with this company was an excellent experience from start to finish.
+                                        They
+                                        really listened to what I wanted and made thoughtful recommendations to bring my
+                                        vision to life. The tiling and countertops turned out beautifully—every detail
+                                        is
+                                        just perfect. I couldn’t be happier with the quality and attention they put into
+                                        the
+                                        work!"
+                                    </div>
+                                    <div class="testimonialInfo pt-8 text-center">
+                                        <div class="name text-white font-medium">Alex.K</div>
+                                        <div class="identity text-[0.875rem] text-white font-medium italic">Home Owner
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- White Part -->
+
+            <div
+                class="whitePartContainer absolute w-screen left-0 right-0 h-10 sm:h-20 lg:h-12 lg:px-[3rem] xl:px-[4.25rem] flex items-center justify-center bg-transparent">
+                <div
+                    class="whitePart bg-white w-full h-full rounded-t-2xl sm:rounded-t-[3rem] lg:rounded-t-[1.8rem] xl:rounded-t-[1.75rem]">
+
                 </div>
             </div>
         </div>
-    </header>
-    <!-- Hero page -->
-    <div class="containerForHeroPage w-screen border-2 border-green-500">
-        <!-- This is the background Image -->
-        <div style="background-image: url('./src/images/homepage/hero.png')"
-            class="backgroundImage bg-cover bg-center  h-screen w-screen">
-            <!-- This is the black overlay of the image -->
-            <div style="background-color: rgba(0, 0, 0, 0.4);"
-                class="blackOverlay absolute left-0 right-0 bottom-0 top-0 w-screen h-screen px-[2.4rem] ">
+
+        <!-- Login Section -->
+        <div
+            class="loginSection flex justify-center lg:justify-between lg:gap-12 bg-[#4F4FFE] pt-[3.25rem] sm:pt-[6rem] pb-[7.25rem] sm:pb-[6rem] px-12 sm:px-[5.125rem] md:px-[9.125rem] lg:px-[3.125rem] rounded-2xl sm:rounded-[3rem] lg:rounded-[1.8rem] xl:rounded-[1.75rem]">
+            <div class="column1 w-full lg:w-[50%] xl:w-[40%]">
+                <div class="headingContainer flex justify-center">
+                    <p class="text-sm-h2 text-white text-center block lg:hidden">Get In Touch</p>
+                </div>
+
+                <form class="pt-[2.75rem] h-auto" action="">
+                    <div class="fieldContainer flex flex-col gap-[0.6rem] pb-[1.5rem]">
+                        <label for="name"
+                            class="font-semibold text-base sm:text-md-body xl:text-xl-body text-white">Name</label>
+                        <div
+                            class="inputContainer h-10 sm:h-12 rounded-lg px-3 flex items-center justify-center border-3 border-white">
+                            <input type="text"
+                                class="block h-full w-full focus:outline-none focus:border-none text-gray-900">
+                        </div>
+                    </div>
+                    <div class="fieldContainer flex flex-col gap-[0.6rem] pb-[1.5rem]">
+                        <label for="name"
+                            class="font-semibold text-base sm:text-md-body xl:text-xl-body text-white">Email</label>
+                        <div
+                            class="inputContainer h-10 sm:h-12 rounded-lg px-3 flex items-center justify-center border-3 border-white">
+                            <input type="text"
+                                class="block h-full w-full focus:outline-none focus:border-none text-gray-900">
+                        </div>
+                    </div>
+                    <div class="messageFieldContainer flex flex-col pb-[3.3rem] gap-[0.6rem]">
+                        <label for="name"
+                            class="font-semibold text-base sm:text-md-body xl:text-xl-body text-white">Message</label>
+                        <div
+                            class="inputContainer rounded-lg px-3 flex items-center justify-center h-40 border-3 border-white">
+                            <textarea
+                                class="block h-full w-full p-0 m-0 focus:outline-none focus:border-none text-gray-900"
+                                rows="4" cols="50"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="buttonContainer">
+                        <input type="submit" value="Submit"
+                            class="bg-[#4B0082] text-white sm:text-md-body px-[2.125rem] sm:px-10 py-3 sm:py-[0.8rem] font-semibold rounded-lg cursor-pointer transition-all duration-500 ease-in-out hover:bg-accent hover:shadow-lg hover:scale-102">
+                    </div>
+                </form>
             </div>
-            <!-- This is the text container that contains the text and the button -->
-            <div class="headingAndSubHeading">
-                <h1>Looking for an Interior Design Firm That Listens and Delivers?</h1>
+
+            <div class="column2 hidden lg:block lg:w-[50%]">
+                <div class="headingTextContainer pb-6">
+                    <p class="text-white lg:text-md-h1 xl:text-xl-h1">Get In Touch</p>
+                </div>
+
+                <div class="imageContainer">
+                    <img src="./src/images/homepage/login/pexels-customer-care.png" alt=""
+                        class="w-full h-[22rem] xl:h-[32rem] object-cover rounded-2xl xl:rounded-3xl">
+                </div>
+
             </div>
 
         </div>
 
-    </div>
-    </div>
-    <!-- This is the container that covers all the content/ -->
-    <div class="containerForAllContents w-screen  px-[2.4rem] border-2 border-green-500">
+        <footer class="bg-[#4F4FFE]">
+            <!-- White Part -->
 
+            <div
+                class="whitePartContainer absolute w-screen left-0 right-0 h-10 sm:h-20 lg:h-12 lg:px-[3rem] xl:px-[4.25rem] flex items-center justify-center bg-transparent">
+                <div
+                    class="whitePart bg-white w-full h-full rounded-b-2xl sm:rounded-b-[3rem] lg:rounded-b-[1.8rem] xl:rounded-b-[1.75rem]">
 
+                </div>
+            </div>
+
+            <div class="actualFooterSection pt-10 sm:pt-20 lg:pt-12">
+
+                <div class="footer flex justify-evenly items-center h-80 bg-footerColor">
+                    <div class="column1 flex flex-col justify-center items-center w-2/5 h-full">
+                        <div
+                            class="logo-and-contactInfo flex flex-col justify-center items-center w-full lg:w-1/2 h-[20rem]">
+                            <img class="w-28 md:w-30 h-20 md:h-20" src="./src/images/Logo.png" alt="">
+                            <div class="contactinfo py-4">
+                                <p class="text-xs sm:text-base xl:text-[1.125rem] font-semibold pb-1 text-white">
+                                    0723121123</p>
+                                <p class="text-xs sm:text-base xl:text-[1.125rem]  font-semibold text-white">
+                                    user@user.gmail.com</p>
+                            </div>
+                            <div class="socialmedia w-10/12 md:w-6/12 flex items-center justify-evenly">
+                                <a class="w-auto h-auto" href="">
+                                    <img class="w-5 md:w-7 h-5 md:h-7" src="{% static 'src/images/facebook.svg' %}"
+                                        alt="facebook">
+                                </a>
+                                <a class="w-auto h-auto" href="">
+                                    <img class="w-4 md:w-6 h-4 md:h-6" src="{% static 'src/images/twitter.svg' %}"
+                                        alt="twitter">
+                                </a>
+                                <a class="w-auto h-auto" href="">
+                                    <img class="w-4 md:w-6 h-4 md:h-6" src="{% static 'src/images/instagram.svg' %}"
+                                        alt="X">
+                                </a>
+                            </div>
+                        </div>
+                        <!-- <div class="attributes pt-6 pb-2">
+                            <p class="text-xxs md:text-xs text-white">Attribute to Freepik</p>
+                            <p class="text-xxs md:text-xs text-white">Attribute to Freepik</p>
+                            <p class="text-xxs md:text-xs text-white">Attribute to Freepik</p>
+                        </div> -->
+                    </div>
+                    <div class="column2 w-2/5 h-full flex justify-center items-center">
+                        <ul class=" footer-links h-auto">
+                            <!--The underline effect on hover is in custom.css-->
+                            <li class="pb-1 md:pb-2">
+                                <a class="text-white text-sm-body sm:text-md-body xl:text-xl-body font-semibold relative after:content-[''] after:absolute after:bg-white after:left-0 after:bottom-0 after:w-0 hover:after:w-full after:h-0.5 after:rounded-full after:transition-all after:duration-500 after:ease-in-out"
+                                    href="">Home</a>
+                            </li>
+                            <li class="pb-1 md:pb-2">
+                                <a class="text-white text-sm-body sm:text-md-body xl:text-xl-body font-semibold relative after:content-[''] after:absolute after:bg-white after:left-0 after:bottom-0 after:w-0 hover:after:w-full after:h-0.5 after:rounded-full after:transition-all after:duration-500 after:ease-in-out "
+                                    href="">What We Offer</a>
+                            </li>
+                            <li class="pb-1 md:pb-2">
+                                <a class="text-white text-sm-body sm:text-md-body xl:text-xl-body font-semibold relative after:content-[''] after:absolute after:bg-white after:left-0 after:bottom-0 after:w-0 hover:after:w-full after:h-0.5 after:rounded-full after:transition-all after:duration-500 after:ease-in-out "
+                                    href="">What We Do</a>
+                            </li>
+                            <li class="pb-1 md:pb-2">
+                                <a class=" text-white text-sm-body sm:text-md-body xl:text-xl-body font-semibold relative after:content-[''] after:absolute after:bg-white after:left-0 after:bottom-0 after:w-0 hover:after:w-full after:h-0.5 after:rounded-full after:transition-all after:duration-500 after:ease-in-out "
+                                    href="">Gallery</a>
+                            </li>
+                            <li class="pb-1 md:pb-2">
+                                <a class="text-white text-sm-body sm:text-md-body xl:text-xl-body font-semibold relative after:content-[''] after:absolute after:bg-white after:left-0 after:bottom-0 after:w-0 hover:after:w-full after:h-0.5 after:rounded-full after:transition-all after:duration-500 after:ease-in-out "
+                                    href="">What Our Clients Say</a>
+                            </li>
+                            <li class="">
+                                <a class="text-white text-sm-body sm:text-md-body xl:text-xl-body font-semibold relative after:content-[''] after:absolute after:bg-white after:left-0 after:bottom-0 after:w-0 hover:after:w-full after:h-0.5 after:rounded-full after:transition-all after:duration-500 after:ease-in-out "
+                                    href="">Get In Touch</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <!-- This is filled in with Javascript -->
+                    <p id="copyrightText" class="bg-black py-2 text-center text-white text-xs"> </p>
+                </div>
+            </div>
+
+        </footer>
     </div>
+
+    <script>
+        //Get the Current Year
+        const currentYear = new Date().getFullYear();
+
+        //Update the copyright year in the footer
+        document.getElementById("copyrightText").innerHTML = `© ${currentYear} Charm Designs. All rights reserved.`;
+    </script>
+
+    <script src="../node_modules/@glidejs/glide/dist/glide.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initialize Glide with proper options
+            const glide = new Glide('.glide', {
+                type: 'carousel',
+                perView: 3,
+                focusAt: 'center',
+                gap: 0,
+                peek: 0,
+                bound: true,
+                autoplay: 0,
+                breakpoints: {
+                    1024: {
+                        type: 'carousel',
+                        perView: 2,
+                        focusAt: 'center',
+                        autoplay: 5000,
+                        gap: 0,
+                        peek: 0,
+                        bound: true
+                    },
+                    768: {
+                        type: 'carousel',
+                        perView: 1,
+                        focusAt: 'center',
+                        autoplay: 5000,
+                        gap: 0,
+                        peek: 0,
+                        bound: true
+                    },
+
+                    425: {
+                        type: 'carousel',
+                        perView: 1,
+                        focusAt: 'center',
+                        autoplay: 5000,
+                        gap: 0,
+                        peek: 0,
+                        bound: true
+                    }
+                },
+                run: false
+            });
+
+            // Store the instance
+            const glideInstance = glide;
+
+            // Wait for mount before adding navigation
+            glide.on('mount.after', function () {
+                // Add navigation handlers after successful mount
+                document.querySelector('.glide__arrow--left').addEventListener('click', function () {
+                    glideInstance.go('<');
+                });
+
+                document.querySelector('.glide__arrow--right').addEventListener('click', function () {
+                    glideInstance.go('>');
+                });
+            });
+
+            // Mount the carousel
+            glide.mount();
+        });
+    </script>
+
 </body>
 
 </html>
+
+<!-- Make more button hoverable and also the companies worked for -->
