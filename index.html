@@ -65,94 +65,96 @@
 
             </div>
             <!-- Header section with navigation and hamburger menu for mobile view -->
-            <header
-                class="theHeader bg-primary fixed top-0 left-0 right-0 px-[2.93rem] lg:px-[1.8rem] xl:px-[2.45rem] lg:max-w-[calc(100%-6rem)] xl:max-w-[calc(100%-8.5rem)] mx-auto flex flex-col items-center justify-between rounded-b-xl lg:rounded-b-none lg:rounded-t-xl gap-10 z-40">
-
-                <!-- Container for the logo and hamburger menu on mobile -->
+            <header class="fixed bg-transparent lg:bg-white top-0 left-0 right-0 z-40">
                 <div
-                    class="logoAndHamburger bg-primary w-full h-[3.18rem] xl:h-[4.125rem] flex  justify-between items-center z-30">
+                    class="theHeader bg-primary px-[2.93rem] lg:px-[1.8rem] xl:px-[2.45rem] lg:max-w-[calc(100%-5.7rem)] xl:max-w-[calc(100%-8.45rem)] mx-auto flex flex-col items-center justify-between rounded-b-xl lg:rounded-b-none lg:rounded-t-xl gap-10 z-40">
 
-                    <!-- Logo section with a fixed width for images -->
-                    <div class="logo h-[80%] xl:h-auto w-auto xl:w-[7.125rem]">
-                        <img src="./src/images/Logo.png" alt="" class="w-full h-full">
+                    <!-- Container for the logo and hamburger menu on mobile -->
+                    <div
+                        class="logoAndHamburger bg-primary w-full h-[3.18rem] xl:h-[4.125rem] flex  justify-between items-center z-30">
+
+                        <!-- Logo section with a fixed width for images -->
+                        <div class="logo h-[80%] xl:h-auto w-auto xl:w-[7.125rem]">
+                            <img src="./src/images/Logo.png" alt="" class="w-full h-full">
+                        </div>
+
+                        <!-- Hamburger menu for mobile devices, toggles the mobile menu on click -->
+                        <div @click="open = !open;" class="hamburgerWrapper block lg:hidden">
+                            <button class="hamburgerMenu flex flex-col justify-between w-8 h-6">
+                                <!-- Hamburger icon, uses Alpine.js to change appearance on click -->
+                                <span :class="open ? 'translate-y-2.5 rotate-45' : '' "
+                                    class="row1 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
+                                <span :class="open ? 'scale-x-0' : '' "
+                                    class="row2 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
+                                <span :class="open ? '-translate-y-2.5 -rotate-45' : '' "
+                                    class="row3 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
+                            </button>
+                        </div>
+
+                        <!-- Desktop navigation menu -->
+                        <div x-data="{activeIndex: null}" class="navWrapper hidden lg:block">
+                            <nav class="flex gap-8 min-w-[39rem] xl:min-w-[45rem]">
+                                <!-- Navigation links -->
+                                <ul class="flex justify-evenly items-center min-w-[30rem] xl:min-w-[35rem]">
+                                    <!-- Dynamically generated navigation items using Alpine.js -->
+                                    <template x-for="(item, index) in [
+                                            {name: 'Home', link: './index.html'},
+                                            {name: 'What We Do', link: './index.html#whatwedoSection'},
+                                            {name: 'What We Offer', link: './index.html#whatweofferSection'},
+                                            {name: 'Testimonials', link: './index.html#testimonialSection'},
+                                            {name: 'Gallery', link: './gallery.html'}
+                                        ]" :key="index">
+                                        <li @click="activeIndex = index"
+                                            :class="activeIndex === index ? 'after:scale-x-100' : 'after:scale-x-0' "
+                                            class="relative flex justify-center text-sm xl:text-base font-medium text-secondary hover:text-[1.02rem] hover:text-accent after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5 after:bg-accent after:rounded-full after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">
+                                            <a :href="item.link" x-text="item.name"></a>
+                                        </li>
+                                    </template>
+                                </ul>
+
+                                <!-- Button to book a call, visible on large screens -->
+                                <a href="./index.html#loginSection"
+                                    class="px-5 xl:px-6 py-2 xl:py-2 rounded-[20rem] text-sm text-white font-semibold  bg-accent hover:bg-secondary transition-all ease-in-out duration-300 border-none">
+                                    Book a call
+                                </a>
+                            </nav>
+                        </div>
                     </div>
 
-                    <!-- Hamburger menu for mobile devices, toggles the mobile menu on click -->
-                    <div @click="open = !open;" class="hamburgerWrapper block lg:hidden">
-                        <button class="hamburgerMenu flex flex-col justify-between w-8 h-6">
-                            <!-- Hamburger icon, uses Alpine.js to change appearance on click -->
-                            <span :class="open ? 'translate-y-2.5 rotate-45' : '' "
-                                class="row1 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
-                            <span :class="open ? 'scale-x-0' : '' "
-                                class="row2 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
-                            <span :class="open ? '-translate-y-2.5 -rotate-45' : '' "
-                                class="row3 h-[0.25rem] bg-secondary rounded transition duration-300 ease-in-out"></span>
-                        </button>
-                    </div>
+                    <!-- Mobile menu container, appears when hamburger menu is clicked -->
+                    <div class="mobileMenuContainer w-full pb-10 transition-all duration-300 ease-in-out z-40"
+                        x-show="open" x-transition:enter="transition-all duration-500 ease-out"
+                        x-transition:enter-start="-translate-y-full opacity-0"
+                        x-transition:enter-end="translate-y-0 opacity-100"
+                        x-transition:leave="transition-all duration-300 ease-in"
+                        x-transition:leave-start="translate-y-0 opacity-100"
+                        x-transition:leave-end="-translate-y-full opacity-0" x-cloak>
 
-                    <!-- Desktop navigation menu -->
-                    <div x-data="{activeIndex: null}" class="navWrapper hidden lg:block">
-                        <nav class="flex gap-8 min-w-[39rem] xl:min-w-[45rem]">
-                            <!-- Navigation links -->
-                            <ul class="flex justify-evenly items-center min-w-[30rem] xl:min-w-[35rem]">
-                                <!-- Dynamically generated navigation items using Alpine.js -->
-                                <template x-for="(item, index) in [
-                                        {name: 'Home', link: './index.html'},
-                                        {name: 'What We Do', link: './index.html#whatwedoSection'},
-                                        {name: 'What We Offer', link: './index.html#whatweofferSection'},
-                                        {name: 'Testimonials', link: './index.html#testimonialSection'},
-                                        {name: 'Gallery', link: './gallery.html'}
-                                    ]" :key="index">
-                                    <li @click="activeIndex = index"
-                                        :class="activeIndex === index ? 'after:scale-x-100' : 'after:scale-x-0' "
-                                        class="relative flex justify-center text-sm xl:text-base font-medium text-secondary hover:text-[1.02rem] hover:text-accent after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5 after:bg-accent after:rounded-full after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">
-                                        <a :href="item.link" x-text="item.name"></a>
-                                    </li>
-                                </template>
+                        <!-- Mobile menu links and call-to-action button -->
+                        <div class="mobileMenu flex flex-col gap-10">
+                            <ul class="flex flex-col gap-4">
+                                <!-- Mobile navigation items -->
+                                <li @click="open = false" class="text-center"> <a href="index.html"
+                                        class="text-secondary font-medium">Home</a>
+                                </li>
+                                <li @click="open = false" class="text-center"> <a href="index.html#whatweofferSection"
+                                        class="text-secondary font-medium">What We Offer</a>
+                                </li>
+                                <li @click="open = false" class="text-center"> <a href="index.html#whatwedoSection"
+                                        class="text-secondary font-medium">What We Do</a> </li>
+                                <li @click="open = false" class="text-center"> <a href="index.html#testimonialSection"
+                                        class="text-secondary font-medium">Testimonials</a></li>
+                                <li @click="open = false" class="text-center"> <a href="./gallery.html"
+                                        class="text-secondary font-medium">Gallery</a> </li>
                             </ul>
 
-                            <!-- Button to book a call, visible on large screens -->
-                            <a href="./index.html#loginSection"
-                                class="px-5 xl:px-6 py-2 xl:py-2 rounded-[20rem] text-sm text-white font-semibold  bg-accent hover:bg-secondary transition-all ease-in-out duration-300 border-none">
-                                Book a call
-                            </a>
-                        </nav>
-                    </div>
-                </div>
-
-                <!-- Mobile menu container, appears when hamburger menu is clicked -->
-                <div class="mobileMenuContainer w-full pb-10 transition-all duration-300 ease-in-out z-40" x-show="open"
-                    x-transition:enter="transition-all duration-500 ease-out"
-                    x-transition:enter-start="-translate-y-full opacity-0"
-                    x-transition:enter-end="translate-y-0 opacity-100"
-                    x-transition:leave="transition-all duration-300 ease-in"
-                    x-transition:leave-start="translate-y-0 opacity-100"
-                    x-transition:leave-end="-translate-y-full opacity-0" x-cloak>
-
-                    <!-- Mobile menu links and call-to-action button -->
-                    <div class="mobileMenu flex flex-col gap-10">
-                        <ul class="flex flex-col gap-4">
-                            <!-- Mobile navigation items -->
-                            <li @click="open = false" class="text-center"> <a href="index.html"
-                                    class="text-secondary font-medium">Home</a>
-                            </li>
-                            <li @click="open = false" class="text-center"> <a href="index.html#whatweofferSection"
-                                    class="text-secondary font-medium">What We Offer</a>
-                            </li>
-                            <li @click="open = false" class="text-center"> <a href="index.html#whatwedoSection"
-                                    class="text-secondary font-medium">What We Do</a> </li>
-                            <li @click="open = false" class="text-center"> <a href="index.html#testimonialSection"
-                                    class="text-secondary font-medium">Testimonials</a></li>
-                            <li @click="open = false" class="text-center"> <a href="./gallery.html"
-                                    class="text-secondary font-medium">Gallery</a> </li>
-                        </ul>
-
-                        <!-- Book a call button for mobile view -->
-                        <div class="buttonHolder flex justify-center">
-                            <a @click="open = false" href="./index.html#loginSection"
-                                class=" px-5 xl:px-6 py-2 xl:py-2  rounded-lg text-base text-white font-semibold bg-accent transition duration-300 ease-in-out border-none">
-                                Book a call
-                            </a>
+                            <!-- Book a call button for mobile view -->
+                            <div class="buttonHolder flex justify-center">
+                                <a @click="open = false" href="./index.html#loginSection"
+                                    class=" px-5 xl:px-6 py-2 xl:py-2  rounded-lg text-base text-white font-semibold bg-accent transition duration-300 ease-in-out border-none">
+                                    Book a call
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -763,16 +765,15 @@
                             </div>
                             <div class="socialmedia w-10/12 md:w-6/12 flex items-center justify-evenly">
                                 <a class="w-auto h-auto" href="">
-                                    <img class="w-5 md:w-7 h-5 md:h-7" src="{% static 'src/images/facebook.svg' %}"
+                                    <img class="w-5 md:w-6 h-5 md:h-6" src="./src/images/footer/facebook.svg"
                                         alt="facebook">
                                 </a>
                                 <a class="w-auto h-auto" href="">
-                                    <img class="w-4 md:w-6 h-4 md:h-6" src="{% static 'src/images/twitter.svg' %}"
+                                    <img class="w-4 md:w-6 h-4 md:h-6" src="./src/images/footer/instagram.svg"
                                         alt="twitter">
                                 </a>
                                 <a class="w-auto h-auto" href="">
-                                    <img class="w-4 md:w-6 h-4 md:h-6" src="{% static 'src/images/instagram.svg' %}"
-                                        alt="X">
+                                    <img class="w-4 md:w-6 h-4 md:h-6" src="./src/images/footer/x-twitter.svg" alt="X">
                                 </a>
                             </div>
                         </div>
